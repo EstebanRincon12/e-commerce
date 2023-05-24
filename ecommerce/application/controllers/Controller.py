@@ -1,10 +1,11 @@
 from application.services.ServiceUser import AuthenticationService
 from application.services.ServiceUser import UserCreationService
+from ecommerce.domain.repositories.UserRepository import UserRepository
 
 # ...
 
 authentication_service = AuthenticationService(user_repository)
-user_creation_service = UserCreationService(user_repository)
+user_creation_service = UserCreationService(UserRepository)
 
 @app.route('/login', methods=['POST'])
 def login():
