@@ -3,6 +3,7 @@ from ecommerce.domain.models.User import User
 from ecommerce.domain.repositories.UserRepository import UserRepository
 
 class PostgresUserRepository(UserRepository):
+
     def __init__(self, connection_string):
         self.connection_string = connection_string
 
@@ -16,7 +17,7 @@ class PostgresUserRepository(UserRepository):
                 """
                 cursor.execute(
                     insert_query,
-                    (user.login, user.rol_name, user.id_person, user.password)
+                    (user.login, user.rol_name._role, user.id_person, user.password._hash)
                 )
                 conn.commit()
         except (psycopg2.Error, Exception) as error:

@@ -1,3 +1,7 @@
+from ecommerce.domain.value_objects.EncryptedPassword import EncryptedPassword
+from ecommerce.domain.value_objects.UserRole import UserRole
+
+
 class User:
     """
     Clase que representa a un usuario en el sistema.
@@ -15,9 +19,9 @@ class User:
             password (str): Contraseña del usuario.
         """
         self._login = login
-        self._rol_name = rol_name
+        self._rol_name = UserRole(rol_name)
         self._id_person = id_person
-        self._password = password
+        self._password = EncryptedPassword(password)
 
     @property
     def login(self):
@@ -58,3 +62,6 @@ class User:
             str: Contraseña del usuario.
         """
         return self._password
+    
+    def verify_password(self, password):
+        return self._password.verify_password(password)
