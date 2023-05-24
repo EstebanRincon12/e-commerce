@@ -1,7 +1,7 @@
 # application/use_cases/create_user.py
 
-from domain.models.User import User
-from domain.repositories.UserRepository import UserRepository
+from ecommerce.domain.models.User import User
+from ecommerce.domain.repositories.UserRepository import UserRepository
 
 class CreateUserUseCase:
     def __init__(self, user_repository: UserRepository):

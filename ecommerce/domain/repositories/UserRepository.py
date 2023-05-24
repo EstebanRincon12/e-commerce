@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Optional, List
 
-from domain.models.User import User
+from ecommerce.domain.models.User import User
 
 class UserRepository(ABC):
     @abstractmethod

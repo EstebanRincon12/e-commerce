@@ -1,9 +1,12 @@
 # application/use_cases/authenticate_user.py
 
-from domain.models.User import User
-from domain.repositories.UserRepository import UserRepository
+from ecommerce.domain.models.User import User
+from ecommerce.domain.repositories.UserRepository import UserRepository
 
 class AuthenticateUserUseCase:
+    """ se utiliza para verificar las credenciales de un 
+    usuario y determinar si son válidas.
+    """
     def __init__(self, user_repository: UserRepository):
         self.user_repository = user_repository
 
