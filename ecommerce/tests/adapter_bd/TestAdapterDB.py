@@ -13,11 +13,11 @@ from ecommerce.domain.models.User  import User
 connection_string = "dbname=e-commerce user=postgres password=a123 host=localhost port=5432"
 
 # Crear una instancia del adaptador de base de datos
-repository = PostgresUserRepository(connection_string)
+repository = PostgresUserRepository()
 
 
 # Crear una instancia del usuario
-user = User(login='cata', rol_name='admin', id_person=1007381664, password='a123')
+user = User(login='julito', rol_name='admin', id_person=1005182490, password='a123')
 
 # Llamar al método create_user del adaptador de base de datos
 repository.create_user(user)

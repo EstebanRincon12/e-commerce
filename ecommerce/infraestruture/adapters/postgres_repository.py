@@ -2,9 +2,18 @@ import psycopg2
 from ecommerce.domain.models.User import User
 from ecommerce.domain.repositories.UserRepository import UserRepository
 
+from dotenv import load_dotenv
+import os
+
+# Cargar variables de entorno desde el archivo .env
+load_dotenv()
+
+# Obtener la cadena de conexión de la variable de entorno
+connection_string = os.getenv("DB_CONNECTION_STRING")
+
 class PostgresUserRepository(UserRepository):
 
-    def __init__(self, connection_string):
+    def __init__(self):
         self.connection_string = connection_string
 
     def create_user(self, user: User) -> None:

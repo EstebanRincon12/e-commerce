@@ -1,32 +1,25 @@
-from application.services.ServiceUser import AuthenticationService
-from application.services.ServiceUser import UserCreationService
-from ecommerce.domain.repositories.UserRepository import UserRepository
+from flask import Flask, request
+from ecommerce.infraestruture.adapters.postgres_repository import PostgresUserRepository
+from ecommerce.application.services.ServiceUser import UserService
 
-# ...
+app = Flask(__name__)
+user_repository = PostgresUserRepository()
+user_service = UserService(user_repository)
 
-authentication_service = AuthenticationService(user_repository)
-user_creation_service = UserCreationService(UserRepository)
+@app.route("/users", methods=["POST"])
+def create_user():
+    data = request.json
+    login = data["login"]
+    rol_name = data["rol_name"]
+    id_person = data["id_person"]
+    password = data["password"]
 
-@app.route('/login', methods=['POST'])
-def login():
-    # Obtener los datos de la solicitud
-    username = request.form['username']
-    password = request.form['password']
-    
-    # Llamar al caso de uso correspondiente
-    user = authentication_service.authenticate(username, password)
-    
-    # ...
-    
-@app.route('/register', methods=['POST'])
-def register():
-    # Obtener los datos de la solicitud
-    username = request.form['username']
-    password = request.form['password']
-    role = request.form['role']
-    description = request.form['description']
-    
-    # Llamar al caso de uso correspondiente
-    user = user_creation_service.create_user(username, password, role, description)
-    
-    # ...
+    created_user = user_service.create_user(login, rol_name, id_person, password)
+
+    if created_user:
+        return {"message": "User created successfully"}, 201
+    else:
+        return {"message": "Failed to create user"}, 500
+
+if __name__ == "__main__":
+    app.run()

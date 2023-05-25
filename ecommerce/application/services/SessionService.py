@@ -11,6 +11,7 @@ class SessionService:
             'user_id': user_id,
             'exp': datetime.utcnow() + timedelta(minutes=self.expiration_time)
         }
+        
         token = jwt.encode(payload, self.secret_key, algorithm='HS256')
         return token
 
