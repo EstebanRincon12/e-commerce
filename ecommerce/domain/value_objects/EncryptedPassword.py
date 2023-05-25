@@ -14,6 +14,7 @@ class EncryptedPassword:
         """
         self._hash = self._encrypt_password(password)
 
+
     @staticmethod
     def _encrypt_password(password):
         """

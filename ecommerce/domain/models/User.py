@@ -23,6 +23,15 @@ class User:
         self._id_person = id_person
         self._password = EncryptedPassword(password)
 
+
+    def serialize(self):
+        return {
+            'login': self.login,
+            'rol_name': self.rol_name._role,
+            'id_person': self.id_person,
+            'password': self.password._hash
+        }
+
     @property
     def login(self):
         """

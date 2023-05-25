@@ -5,6 +5,8 @@ from ecommerce.domain.repositories.UserRepository import UserRepository
 from dotenv import load_dotenv
 import os
 
+from ecommerce.domain.value_objects.EncryptedPassword import EncryptedPassword
+
 # Cargar variables de entorno desde el archivo .env
 load_dotenv()
 
@@ -106,10 +108,10 @@ class PostgresUserRepository(UserRepository):
                 cursor = conn.cursor()
                 select_query = """
                     SELECT login, rol_name, id_person, password
-                    FROM "User"
+                    FROM "Users"
                     WHERE login = %s AND password = %s
                 """
-                cursor.execute(select_query, (login, password))
+                cursor.execute(select_query, (login, EncryptedPassword._encrypt_password(password)))
                 row = cursor.fetchone()
                 if row:
                     login, rol_name, id_person, password = row
