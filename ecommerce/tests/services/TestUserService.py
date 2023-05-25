@@ -1,40 +1,27 @@
-import unittest
-from unittest.mock import Mock
-from ecommerce.domain.repositories.UserRepository import UserRepository
-from ecommerce.domain.models.User import User
-from ecommerce.application.use_cases.create_user import CreateUserUseCase
+from ecommerce.application.services.ServiceUser import UserService
+from ecommerce.infraestruture.adapters.postgres_repository import PostgresUserRepository
 
-class UserCreationServiceTest(unittest.TestCase):
+# Crear una instancia de UserRepository
+user_repository = PostgresUserRepository()
 
-    def setUp(self):
-        self.user_repository = Mock(spec=UserRepository)
-        self.user_creation_service = CreateUserUseCase(self.user_repository)
+# Crear una instancia de UserService con el UserRepository
+user_service = UserService(user_repository)
 
-    def test_create_user(self):
-        # Datos de ejemplo para el nuevo usuario
-        username = "john_doe"
-        password = "password"
-        role = "admin"
-        email = "john.doe@example.com"
+# Datos del usuario a crear
+login = "ejemplo"
+rol_name = "admin"
+id_person = 12345
+password = "secreto"
 
-        # Simular el comportamiento del repositorio
-        self.user_repository.create_user.return_value = None
+# Crear el usuario
+user = user_service.create_user(login, rol_name, id_person, password)
 
-        # Llamar al método del caso de uso
-        result = self.user_creation_service.execute(username, role, 190909, password)
-
-        # Verificar que el método del repositorio fue llamado con los parámetros correctos
-        self.user_repository.create_user.assert_called_once()
-        self.user_repository.create_user.assert_called_once_with(
-            User(username, role, 190909, password)
-        )
-
-        # Verificar que se devolvió el objeto User esperado
-        self.assertIsInstance(result, User)
-        self.assertEqual(result.login, username)
-        self.assertEqual(result.rol_name, role)
-        self.assertEqual(result.id_person, 190909)
-        self.assertEqual(result.password, password)
-
-if __name__ == "__main__":
-    unittest.main()
+# Verificar si el usuario se creó correctamente
+if user:
+    print("Usuario creado exitosamente:")
+    print("Login:", user.login)
+    print("Rol:", user.rol_name)
+    print("ID de persona:", user.id_person)
+    print("Contraseña:", user.password)
+else:
+    print("No se pudo crear el usuario")

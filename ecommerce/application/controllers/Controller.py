@@ -2,6 +2,7 @@ from flask import Flask, request
 from ecommerce.infraestruture.adapters.postgres_repository import PostgresUserRepository
 from ecommerce.application.services.ServiceUser import UserService
 
+
 app = Flask(__name__)
 user_repository = PostgresUserRepository()
 user_service = UserService(user_repository)

@@ -26,4 +26,3 @@ class UserService:
 
     def create_user(self, login: str, rol_name: str, id_person: int, password: str) -> User:
         return self.create_user_use_case.execute(login, rol_name, id_person, password)
-

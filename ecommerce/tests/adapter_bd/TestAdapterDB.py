@@ -17,7 +17,7 @@ repository = PostgresUserRepository()
 
 
 # Crear una instancia del usuario
-user = User(login='julito', rol_name='admin', id_person=1005182490, password='a123')
+user = User(login='tania', rol_name='user', id_person=7878787, password='a123')
 
 # Llamar al método create_user del adaptador de base de datos
 repository.create_user(user)
